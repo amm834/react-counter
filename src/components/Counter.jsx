@@ -1,18 +1,28 @@
 import {useState} from "react";
 
-const Counter = ({value, onDelete}) => {
+const Counter = ({counter, onDelete}) => {
     const [state, setState] = useState({
-        count: value,
-    });
-
+        count: counter.value
+    })
     const formatCount = () => state.count === 0 ? <span>Zero</span> : state.count;
 
     return (
         <div className="mb-3">
-            <span className={`bg-primary badge ${state.count === 0 ? 'bg-danger' : ''}`}>{formatCount()}</span>
+            <span className={`bg-primary badge ${state.count <= 0 ? 'bg-danger' : ''}`}>{formatCount()}</span>
             <button
-                onClick={onDelete}
-                className="btn btn-success ms-3 ">Increment
+                className="btn btn-success ms-3 "
+                onClick={() => {
+                    setState({
+                        count: state.count + 1
+                    })
+                }}
+            >Increment
+            </button>
+
+            <button className="btn btn-danger ms-3"
+                    onClick={() => onDelete(counter.id)}
+            >
+                Delete
             </button>
         </div>
     )
